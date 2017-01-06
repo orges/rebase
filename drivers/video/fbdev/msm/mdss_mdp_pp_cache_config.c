@@ -1895,4 +1895,3 @@ igc_config_exit:
 	}
 	return ret;
 }
-
