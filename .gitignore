@@ -52,6 +52,9 @@ out
 /System.map
 /Module.markers
 
+#Output dir
+out/
+
 #
 # Debian directory (make deb-pkg)
 #
