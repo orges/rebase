@@ -22,6 +22,7 @@ struct msm_iommu_meta;
 struct msm_iommu_data {
 	struct msm_iommu_meta *meta;
 	struct mutex lock;
+	struct list_head map_list;
 };
 
 #ifdef CONFIG_IOMMU_API
