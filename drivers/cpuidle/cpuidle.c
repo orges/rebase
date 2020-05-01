@@ -35,8 +35,26 @@ static int enabled_devices;
 static int off __read_mostly;
 static int initialized __read_mostly;
 
-static void cpuidle_set_idle_cpu(unsigned int cpu);
-static void cpuidle_clear_idle_cpu(unsigned int cpu);
+#ifdef CONFIG_SMP
+static atomic_t idled = ATOMIC_INIT(0);
+
+#if NR_CPUS > 32
+#error idled CPU mask not big enough for NR_CPUS
+#endif
+
+static void cpuidle_set_idle_cpu(unsigned int cpu)
+{
+	atomic_or(BIT(cpu), &idled);
+}
+
+static void cpuidle_clear_idle_cpu(unsigned int cpu)
+{
+	atomic_andnot(BIT(cpu), &idled);
+}
+#else
+static inline void cpuidle_set_idle_cpu(unsigned int cpu) { }
+static inline void cpuidle_clear_idle_cpu(unsigned int cpu) { }
+#endif
 
 int cpuidle_disabled(void)
 {
@@ -639,22 +657,6 @@ int cpuidle_register(struct cpuidle_driver *drv,
 EXPORT_SYMBOL_GPL(cpuidle_register);
 
 #ifdef CONFIG_SMP
-static atomic_t idle_cpu_mask = ATOMIC_INIT(0);
-
-#if NR_CPUS > 32
-#error idle_cpu_mask not big enough for NR_CPUS
-#endif
-
-static void cpuidle_set_idle_cpu(unsigned int cpu)
-{
-	atomic_or(BIT(cpu), &idle_cpu_mask);
-}
-
-static void cpuidle_clear_idle_cpu(unsigned int cpu)
-{
-	atomic_andnot(BIT(cpu), &idle_cpu_mask);
-}
-
 /*
  * This function gets called when a part of the kernel has a new latency
  * requirement.  This means we need to get only those processors out of their
@@ -664,28 +666,14 @@ static void cpuidle_clear_idle_cpu(unsigned int cpu)
 static int cpuidle_latency_notify(struct notifier_block *b,
 		unsigned long l, void *v)
 {
-	static unsigned long prev_latency[NR_CPUS] = {
-		[0 ... NR_CPUS - 1] = PM_QOS_CPU_DMA_LAT_DEFAULT_VALUE
-	};
-	unsigned long update_mask = 0;
-	unsigned int cpu;
 
-	/* Only send an IPI when the CPU latency requirement is tightened */
-	for_each_cpu(cpu, v) {
-		if (l < prev_latency[cpu])
-			update_mask |= BIT(cpu);
-		prev_latency[cpu] = l;
-	}
+	unsigned long cpus = atomic_read(&idled) & *cpumask_bits(to_cpumask(v));
 
-	if (!update_mask)
-		return NOTIFY_OK;
+	/* Use READ_ONCE to get the isolated mask outside cpu_add_remove_lock */
+	cpus &= ~READ_ONCE(*cpumask_bits(cpu_isolated_mask));
+	if (cpus)
+		arch_send_wakeup_ipi_mask(to_cpumask(&cpus));
 
-	update_mask &= atomic_read(&idle_cpu_mask);
-	update_mask &= ~*cpumask_bits(cpu_isolated_mask);
-
-	/* Notifier is called with preemption disabled */
-	if (update_mask)
-		arch_send_call_function_ipi_mask(to_cpumask(&update_mask));
 	return NOTIFY_OK;
 }
 
