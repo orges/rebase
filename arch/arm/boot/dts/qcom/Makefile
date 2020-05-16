@@ -218,9 +218,7 @@ dtbo-$(CONFIG_ARCH_SDM660) += \
 
 
 else
-dtb-$(CONFIG_ARCH_SDM660) += sdm636-mtp_e7t.dtb \
-	sdm636-mtp_e7s.dtb \
-	sdm660-mtp_wayne.dtb \
+dtb-$(CONFIG_ARCH_SDM660) += sdm636-mtp_e7s.dtb \
 	sdm660-mtp.dtb 
 endif
 
