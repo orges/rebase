@@ -39,7 +39,6 @@ Module.symvers
 *.dwo
 *.su
 out
-modules.order
 #
 # Top-level generic files
 #
