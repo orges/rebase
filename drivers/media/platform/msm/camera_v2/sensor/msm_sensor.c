@@ -1,5 +1,4 @@
 /* Copyright (c) 2011-2017, The Linux Foundation. All rights reserved.
- * Copyright (C) 2019 XiaoMi, Inc.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -153,7 +152,6 @@ int msm_sensor_power_up(struct msm_sensor_ctrl_t *s_ctrl)
 	struct msm_camera_slave_info *slave_info;
 	const char *sensor_name;
 	uint32_t retry = 0;
-	uint32_t check_id_retry = 0;
 
 	if (!s_ctrl) {
 		pr_err("%s:%d failed: %pK\n",
@@ -206,7 +204,6 @@ int msm_sensor_power_up(struct msm_sensor_ctrl_t *s_ctrl)
 		if (rc < 0)
 			return rc;
 		
-	
 		if (!s_ctrl->is_probe_succeed) {
 			rc = msm_sensor_match_vendor_id(s_ctrl);
 			if (rc < 0) {
@@ -217,12 +214,7 @@ int msm_sensor_power_up(struct msm_sensor_ctrl_t *s_ctrl)
 			}
 		}
 		
-		for(check_id_retry = 0; check_id_retry < 3; check_id_retry++) {
-			rc = msm_sensor_check_id(s_ctrl);
-			if (!rc) break;
-			msleep(20);
-		}
-
+		rc = msm_sensor_check_id(s_ctrl);
 		if (rc < 0) {
 			msm_camera_power_down(power_info,
 				s_ctrl->sensor_device_type, sensor_i2c_client);
@@ -340,7 +332,6 @@ int msm_sensor_match_vendor_id(struct msm_sensor_ctrl_t *s_ctrl)
 
 	return rc;
 }
-
 
 static uint16_t msm_sensor_id_by_mask(struct msm_sensor_ctrl_t *s_ctrl,
 	uint16_t chipid)
