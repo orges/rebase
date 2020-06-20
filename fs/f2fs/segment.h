@@ -588,13 +588,13 @@ static inline bool has_not_enough_free_secs(struct f2fs_sb_info *sbi,
 		reserved_sections(sbi) + needed);
 }
 
-static inline bool f2fs_is_checkpoint_ready(struct f2fs_sb_info *sbi)
+static inline int f2fs_is_checkpoint_ready(struct f2fs_sb_info *sbi)
 {
 	if (likely(!is_sbi_flag_set(sbi, SBI_CP_DISABLED)))
-		return true;
+		return 0;
 	if (likely(!has_not_enough_free_secs(sbi, 0, 0)))
-		return true;
-	return false;
+		return 0;
+	return -ENOSPC;
 }
 
 static inline bool excess_prefree_segs(struct f2fs_sb_info *sbi)
