@@ -2270,7 +2270,7 @@ walt_task_in_cum_window_demand(struct rq *rq, struct task_struct *p)
 
 static inline bool energy_aware(void)
 {
-       return sched_feat(ENERGY_AWARE);
+	return true;
 }
 
 static inline void sched_irq_work_queue(struct irq_work *work)
