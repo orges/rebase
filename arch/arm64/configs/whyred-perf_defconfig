@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/arm64 4.4.225 Kernel Configuration
+# Linux/arm64 4.4.229 Kernel Configuration
 #
 CONFIG_ARM64=y
 CONFIG_64BIT=y
@@ -185,6 +185,9 @@ CONFIG_RD_LZMA=y
 # CONFIG_RD_LZ4 is not set
 CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE=y
 # CONFIG_CC_OPTIMIZE_FOR_SIZE is not set
+CONFIG_LTO=y
+CONFIG_HAVE_LD_DEAD_CODE_DATA_ELIMINATION=y
+CONFIG_LD_DEAD_CODE_DATA_ELIMINATION=y
 CONFIG_SYSCTL=y
 CONFIG_ANON_INODES=y
 CONFIG_HAVE_UID16=y
@@ -214,8 +217,6 @@ CONFIG_ADVISE_SYSCALLS=y
 # CONFIG_USERFAULTFD is not set
 CONFIG_PCI_QUIRKS=y
 # CONFIG_MEMBARRIER is not set
-CONFIG_LTO=y
-CONFIG_LD_DEAD_CODE_DATA_ELIMINATION=y
 CONFIG_EMBEDDED=y
 CONFIG_HAVE_PERF_EVENTS=y
 CONFIG_PERF_USE_VMALLOC=y
@@ -265,6 +266,7 @@ CONFIG_CC_STACKPROTECTOR=y
 # CONFIG_CC_STACKPROTECTOR_NONE is not set
 # CONFIG_CC_STACKPROTECTOR_REGULAR is not set
 CONFIG_CC_STACKPROTECTOR_STRONG=y
+CONFIG_THIN_ARCHIVES=y
 CONFIG_HAVE_CONTEXT_TRACKING=y
 CONFIG_HAVE_VIRT_CPU_ACCOUNTING_GEN=y
 CONFIG_HAVE_IRQ_TIME_ACCOUNTING=y
@@ -423,12 +425,12 @@ CONFIG_PCI_LABEL=y
 # CONFIG_ARM64_ERRATUM_827319 is not set
 # CONFIG_ARM64_ERRATUM_824069 is not set
 # CONFIG_ARM64_ERRATUM_819472 is not set
-# CONFIG_ARM64_ERRATUM_832075 is not set 
+# CONFIG_ARM64_ERRATUM_832075 is not set
 CONFIG_ARM64_ERRATUM_845719=y
 CONFIG_ARM64_ERRATUM_843419=y
 # CONFIG_ARM64_ERRATUM_1024718 is not set
 # CONFIG_CAVIUM_ERRATUM_22375 is not set
-# CONFIG_CAVIUM_ERRATUM_23154 is not set 
+# CONFIG_CAVIUM_ERRATUM_23154 is not set
 # CONFIG_CAVIUM_ERRATUM_27456 is not set
 CONFIG_ARM64_4K_PAGES=y
 # CONFIG_ARM64_16K_PAGES is not set
@@ -561,16 +563,17 @@ CONFIG_BINFMT_SCRIPT=y
 # CONFIG_BINFMT_MISC is not set
 CONFIG_COREDUMP=y
 CONFIG_COMPAT=y
+CONFIG_KUSER_HELPERS=y
 CONFIG_KEYS_COMPAT=y
 CONFIG_COMPAT_VDSO=y
 CONFIG_CROSS_COMPILE_ARM32=""
-CONFIG_KUSER_HELPERS=y
 
 #
 # Power management options
 #
 CONFIG_SUSPEND=y
 CONFIG_SUSPEND_FREEZER=y
+# CONFIG_SUSPEND_SKIP_SYNC is not set
 CONFIG_WAKELOCK=y
 # CONFIG_HIBERNATION is not set
 CONFIG_PM_SLEEP=y
@@ -665,8 +668,9 @@ CONFIG_XFRM_STATISTICS=y
 CONFIG_XFRM_IPCOMP=y
 CONFIG_NET_KEY=y
 # CONFIG_NET_KEY_MIGRATE is not set
-CONFIG_WIREGUARD=y
 CONFIG_INET=y
+CONFIG_WIREGUARD=y
+# CONFIG_WIREGUARD_DEBUG is not set
 CONFIG_IP_MULTICAST=y
 CONFIG_IP_ADVANCED_ROUTER=y
 # CONFIG_IP_FIB_TRIE_STATS is not set
@@ -1343,6 +1347,26 @@ CONFIG_ANT_CHECK=y
 # CONFIG_ALTERA_STAPL is not set
 CONFIG_MSM_QDSP6V2_CODECS=y
 CONFIG_MSM_ULTRASOUND=y
+
+#
+# Intel MIC Bus Driver
+#
+
+#
+# SCIF Bus Driver
+#
+
+#
+# Intel MIC Host Driver
+#
+
+#
+# Intel MIC Card Driver
+#
+
+#
+# SCIF Driver
+#
 
 #
 # Intel MIC Coprocessor State Management (COSM) Drivers
@@ -2085,6 +2109,10 @@ CONFIG_VIRTSPMI_MSM_PMIC_ARB=y
 # CONFIG_PPS is not set
 
 #
+# PPS generators support
+#
+
+#
 # PTP clock support
 #
 # CONFIG_PTP_1588_CLOCK is not set
@@ -2762,6 +2790,46 @@ CONFIG_MEDIA_SUBDRV_AUTOSELECT=y
 CONFIG_MEDIA_ATTACH=y
 
 #
+# Audio decoders, processors and mixers
+#
+
+#
+# RDS decoders
+#
+
+#
+# Video decoders
+#
+
+#
+# Video and audio decoders
+#
+
+#
+# Video encoders
+#
+
+#
+# Camera sensor devices
+#
+
+#
+# Flash devices
+#
+
+#
+# Video improvement chips
+#
+
+#
+# Audio/Video compression chips
+#
+
+#
+# Miscellaneous helper chips
+#
+
+#
 # Sensors used on soc_camera driver
 #
 CONFIG_MEDIA_TUNER=y
@@ -2777,9 +2845,45 @@ CONFIG_MEDIA_TUNER_XC4000=y
 CONFIG_MEDIA_TUNER_MC44S803=y
 
 #
+# Multistandard (satellite) frontends
+#
+
+#
+# Multistandard (cable + terrestrial) frontends
+#
+
+#
+# DVB-S (satellite) frontends
+#
+
+#
 # DVB-T (terrestrial) frontends
 #
 # CONFIG_DVB_AS102_FE is not set
+
+#
+# DVB-C (cable) frontends
+#
+
+#
+# ATSC (North American/Korean Terrestrial/Cable DTV) frontends
+#
+
+#
+# ISDB-T (terrestrial) frontends
+#
+
+#
+# ISDB-S (satellite) & ISDB-T (terrestrial) frontends
+#
+
+#
+# Digital terrestrial only tuners/PLL
+#
+
+#
+# SEC control devices for DVB-S
+#
 
 #
 # Tools to develop new frontends
@@ -2939,6 +3043,10 @@ CONFIG_SND_SOC=y
 CONFIG_SND_SOC_COMPRESS=y
 # CONFIG_SND_ATMEL_SOC is not set
 # CONFIG_SND_DESIGNWARE_I2S is not set
+
+#
+# SoC Audio for Freescale CPUs
+#
 
 #
 # Common SoC Audio options for Freescale CPUs:
@@ -3129,6 +3237,7 @@ CONFIG_HID_MAGICMOUSE=y
 CONFIG_HID_MICROSOFT=y
 # CONFIG_HID_MONTEREY is not set
 CONFIG_HID_MULTITOUCH=y
+# CONFIG_HID_NINTENDO is not set
 CONFIG_HID_NTRIG=y
 # CONFIG_HID_ORTEK is not set
 # CONFIG_HID_PANTHERLORD is not set
@@ -3926,7 +4035,7 @@ CONFIG_CLKSRC_PROBE=y
 CONFIG_ARM_ARCH_TIMER=y
 CONFIG_ARM_ARCH_TIMER_EVTSTREAM=y
 CONFIG_MSM_TIMER_LEAP=y
-CONFIG_ARM_ARCH_TIMER_VCT_ACCESS=y 
+CONFIG_ARM_ARCH_TIMER_VCT_ACCESS=y
 # CONFIG_ARM_TIMER_SP804 is not set
 # CONFIG_ATMEL_PIT is not set
 # CONFIG_SH_TIMER_CMT is not set
@@ -3955,6 +4064,10 @@ CONFIG_ARM_SMMU=y
 # Remoteproc drivers
 #
 # CONFIG_STE_MODEM_RPROC is not set
+
+#
+# Rpmsg drivers
+#
 
 #
 # SOC (System On Chip) specific Drivers
@@ -4159,6 +4272,10 @@ CONFIG_QCOM_TADC=y
 # CONFIG_VZ89X is not set
 
 #
+# Hid Sensor IIO Common
+#
+
+#
 # SSP Sensor Common
 #
 # CONFIG_IIO_SSP_SENSORHUB is not set
@@ -4184,6 +4301,10 @@ CONFIG_QCOM_TADC=y
 # CONFIG_MAX5821 is not set
 # CONFIG_MCP4725 is not set
 # CONFIG_MCP4922 is not set
+
+#
+# Frequency Synthesizers DDS/PLL
+#
 
 #
 # Clock Generator/Distribution
@@ -4263,6 +4384,10 @@ CONFIG_QCOM_TADC=y
 # CONFIG_MAG3110 is not set
 # CONFIG_MMC35240 is not set
 # CONFIG_IIO_ST_MAGN_3AXIS is not set
+
+#
+# Inclinometer sensors
+#
 
 #
 # Digital potentiometers
@@ -4471,7 +4596,6 @@ CONFIG_VFAT_FS=y
 CONFIG_FAT_DEFAULT_CODEPAGE=437
 CONFIG_FAT_DEFAULT_IOCHARSET="utf8"
 CONFIG_SDFAT_FS=y
-CONFIG_SDFAT_USE_FOR_EXFAT=y
 CONFIG_SDFAT_DELAYED_META_DIRTY=y
 CONFIG_SDFAT_SUPPORT_DIR_SYNC=y
 CONFIG_SDFAT_DEFAULT_CODEPAGE=437
@@ -4482,6 +4606,10 @@ CONFIG_SDFAT_VIRTUAL_XATTR=y
 CONFIG_SDFAT_VIRTUAL_XATTR_SELINUX_LABEL="u:object_r:sdcard_external:s0"
 # CONFIG_SDFAT_DEBUG is not set
 CONFIG_SDFAT_STATISTICS=y
+CONFIG_EXFAT_FS=y
+CONFIG_EXFAT_DEFAULT_IOCHARSET="utf8"
+CONFIG_EXFAT_VIRTUAL_XATTR=y
+CONFIG_EXFAT_VIRTUAL_XATTR_SELINUX_LABEL="u:object_r:exfat:s0"
 CONFIG_NTFS_FS=y
 # CONFIG_NTFS_DEBUG is not set
 CONFIG_NTFS_RW=y
@@ -4601,6 +4729,10 @@ CONFIG_NLS_UTF8=y
 # CONFIG_DLM is not set
 # CONFIG_FILE_TABLE_DEBUG is not set
 # CONFIG_VIRTUALIZATION is not set
+
+#
+# Kernel hacking
+#
 
 #
 # printk and dmesg options
